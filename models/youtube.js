@@ -2,11 +2,9 @@ const request = require("request");
 const config = require('../config');
 
 function YouTube(){
-    let yt_api_auth = function(url){
-        return "https://www.googleapis.com/youtube/v3/"+url+"&key="+config.youtube_api_key;
-    }
+    let yt_api_auth = function(url){return "https://www.googleapis.com/youtube/v3/"+url+"&key="+config.youtube_api_key;}
 
-    this.search = function(query, maxResults='1', type='channel', part='snippet'){
+    this.search = function(query, maxResults=1, type='channel', part='snippet'){
         return new Promise((resolve, reject) => {
             request(yt_api_auth("search?maxResults="+maxResults+"&part="+part+"&q="+query+"&type="+type), function(error, response, body){
                 let parsed_body = JSON.parse(body);
@@ -16,9 +14,22 @@ function YouTube(){
         });
     }
 
-    this.fetch_channel_uploads = function (youtube_nickname, number_results = 5) {
+    this.get_id_from_nickname = function(nickname){
         return new Promise((resolve, reject) => {
-            request(yt_api_auth("channels?part=contentDetails&forUsername="+youtube_nickname), function(error, response, body) {
+            this.search(nickname,1,'channel','snippet').then(parsed_body => {
+                let nickname_found = parsed_body.items[0].snippet.title;
+                if(nickname.toUpperCase() == nickname_found.toUpperCase()){
+                    resolve(parsed_body.items[0].snippet.channelId);
+                }else{
+                    reject("Error: not matching nicknames.");
+                }
+            }).catch(err => reject(err));
+        });
+    }
+
+    this.fetch_channel_uploads = function(channel_id, number_results = 5){
+        return new Promise((resolve, reject) => {
+            request(yt_api_auth("channels?part=contentDetails&id="+channel_id), function(error, response, body) {
                 if(error)  reject("ERROR: "+error);
                 else{
                     let parsed_body = JSON.parse(body);
