@@ -1,4 +1,7 @@
-# yt-search-bot, a Node.js Telegraf (Telegram) bot to share YouTube channel videos
+# YouTube search bot (yt-search-bot)
+
+## What is this repository about?
+This project is a Node.js Telegraf (Telegram) bot to share YouTube channel videos.
 
 This is the code powering @ytsearchbot.
 
