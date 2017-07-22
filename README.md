@@ -43,3 +43,7 @@ module.exports = {
 For YouTube API key, check: https://developers.google.com/youtube/registering_an_application#Create_API_Keys
 
 For Telegram API key, check https://github.com/Finalgalaxy/telegram-telegraf-bot and follow README instructions about how to create a Telegram Bot.
+
+Once you've set up your API key, just type:
+`npm start`
+...done!
