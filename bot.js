@@ -1,5 +1,4 @@
 const Telegraf = require('telegraf');
-const {Extra, Markup} = Telegraf;
 const config = require('./config'); // Holds Telegram API token plus YouTube API token
 
 var youtube = require('./models/youtube');  // Provides easy access to YouTube API
@@ -15,8 +14,9 @@ bot.telegram.getMe().then((bot_informations) => {
 bot.on('inline_query', ctx => {
     let nickname = ctx.update.inline_query.query;  // Take the nickname out of Telegraf context structure.
     if(nickname.length > 3){  // If user input is longer than 3 characters
-        // Let's get last uploaded videos as data structure through YouTube API (thanks to our written model).
+        // Search channel based on nickname. If there is one with same user query, let's retrieve its channel ID.
         youtube.get_id_from_nickname(nickname).then(channel_id => {
+            // Let's get last uploaded videos as data structure through YouTube API (thanks to our written model).
             youtube.fetch_channel_uploads(channel_id).then(structured_data => {
                 // Let's parse those structured data to get only essential informations for video listing.
                 youtube.parse_list_videos(structured_data).then(video_info => {
@@ -36,7 +36,7 @@ bot.on('inline_query', ctx => {
                     }
                     // Let's show this list to the user. Cache time is set to zero for development purposes.
                     return ctx.answerInlineQuery(new_arr, {cache_time: 0});
-                });
+                }).catch(error => {console.log("Promise error: "+error)});
             }).catch(error => {console.log("Promise error: "+error)});
         }).catch(error => {console.log("Promise error: "+error)});
     }
