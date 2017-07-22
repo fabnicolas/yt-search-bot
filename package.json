@@ -1,7 +1,7 @@
 {
-  "name": "youtube-fetch",
+  "name": "yt-search-bot",
   "version": "1.0.0",
-  "description": "A Node.js application that fetches content from Youtube API, does things and sends results to frontend.",
+  "description": "Node.js Telegraf (Telegram) bot to share YouTube fetched videos from any channel.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/Finalgalaxy/youtube-fetch-BE.git"
   },
   "author": "Finalgalaxy",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Finalgalaxy/youtube-fetch-BE/issues"
   },
