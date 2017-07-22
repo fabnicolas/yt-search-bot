@@ -2,10 +2,18 @@ const request = require("request");
 const config = require('../config');
 
 function YouTube(){
-    let api_base_url = "https://www.googleapis.com/youtube/v3/";
-
     let yt_api_auth = function(url){
-        return api_base_url+url+"&key="+config.youtube_api_key;
+        return "https://www.googleapis.com/youtube/v3/"+url+"&key="+config.youtube_api_key;
+    }
+
+    this.search = function(query, maxResults='1', type='channel', part='snippet'){
+        return new Promise((resolve, reject) => {
+            request(yt_api_auth("search?maxResults="+maxResults+"&part="+part+"&q="+query+"&type="+type), function(error, response, body){
+                let parsed_body = JSON.parse(body);
+                if(parsed_body.pageInfo.totalResults > 0)   resolve(parsed_body);
+                else                                        reject("Error: no results from the search.");
+            });
+        });
     }
 
     this.fetch_channel_uploads = function (youtube_nickname, number_results = 5) {
