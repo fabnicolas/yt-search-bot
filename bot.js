@@ -21,8 +21,8 @@ bot.on('inline_query', ctx => {
                 // Let's parse those structured data to get only essential informations for video listing.
                 youtube.parse_list_videos(structured_data).then(video_info => {
                     // Let's encapsulate those informations in a list that Telegraf API can digest.
-                    
                     let new_arr = [];
+                    // For each video, extract retrieved informations for extra elaborations.
                     for(let k in video_info){
                         new_arr[k] = {
                             type: 'video',
@@ -31,7 +31,8 @@ bot.on('inline_query', ctx => {
                             description: video_info[k].description,
                             video_url: video_info[k].url,
                             mime_type: "video/mp4",
-                            thumb_url: video_info[k].thumb
+                            thumb_url: video_info[k].thumb,
+                            input_message_content: {message_text: "[BOT] "+video_info[k].url}
                         }
                     }
                     // Let's show this list to the user. Cache time is set to zero for development purposes.

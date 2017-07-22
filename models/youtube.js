@@ -51,7 +51,6 @@ function YouTube(){
             let list_videos_parsed = [];
             for(let k in list_videos){
                 let video_info = list_videos[k].snippet;
-                console.log("thumb="+video_info.thumbnails)
                 list_videos_parsed[k] =
                 {
                     title: video_info.title,
