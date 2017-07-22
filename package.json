@@ -2,10 +2,16 @@
   "name": "youtube-fetch",
   "version": "1.0.0",
   "description": "A Node.js application that fetches content from Youtube API, does things and sends results to frontend.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "node app.js"
+    "start": "node index.js"
   },
+  "dependencies": {
+    "promise": "^8.0.1",
+    "request": "^2.81.0",
+    "telegraf": "^3.8.0"
+  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Finalgalaxy/youtube-fetch-BE.git"
